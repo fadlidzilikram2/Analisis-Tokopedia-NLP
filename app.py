@@ -9,7 +9,7 @@ import gensim
 from gensim import corpora
 from gensim.models import LdaModel
 
-# DOWNLOAD NLTK DI AWAL (FIX CLOUD)
+# NLTK 
 nltk.download('punkt_tab', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
@@ -91,6 +91,7 @@ if uploaded_file is not None:
     st.dataframe(df[["review", "sentiment_pred", "dominant_topic"]].head(10))
 
 st.caption("Upload CSV untuk analisis lengkap!")
+
 
 
 
