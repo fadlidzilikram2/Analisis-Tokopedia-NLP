@@ -7,3 +7,5 @@ nltk
 joblib
 gensim
 scipy  
+nltk_data
+
