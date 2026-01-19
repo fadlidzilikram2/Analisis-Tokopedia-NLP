@@ -44,10 +44,14 @@ if uploaded_file is not None:
     df["sentiment_pred"] = nb.predict(X_tfidf)
     
     # LDA Topics
-   tokenized = [text.split() if text.strip() else [] for text in df["clean_review"]]
-   corpus_lda = [dictionary.doc2bow(toks) for toks in tokenized]
-   topic_dist = lda.get_document_topics(corpus_lda, minimum_probability=0.0)  # list topics per doc
-   df["dominant_topic"] = [-1 if not t else max(t, key=lambda x: x[1])[0] for t in topic_dist]
+    df["dominant_topic"] = -1
+    mask = df["clean_review"].str.strip().ne('')
+    if mask.any():
+        temp_tokenized = [text.split() for text in df.loc[mask, "clean_review"]]
+        temp_corpus = [dictionary.doc2bow(t) for t in temp_tokenized]
+        temp_topics = lda[temp_corpus]
+        temp_topics_idx = [max(t, key=lambda x: x[1])[0] for t in temp_topics]
+        df.loc[mask, "dominant_topic"] = temp_topics_idx
 
     # Charts
     st.subheader("📈 Sentimen")
@@ -87,5 +91,6 @@ if uploaded_file is not None:
     st.dataframe(df[["review", "sentiment_pred", "dominant_topic"]].head(10))
 
 st.caption("Upload CSV untuk analisis lengkap!")
+
 
 
