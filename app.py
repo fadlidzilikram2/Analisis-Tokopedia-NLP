@@ -1,3 +1,6 @@
+import nltk
+nltk.download('punkt', quiet=True)
+nltk.download('stopwords', quiet=True)
 import os
 import nltk
 nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
@@ -73,3 +76,4 @@ if uploaded_file is not None:
     st.dataframe(df[["review", "sentiment_pred", "dominant_topic"]].head(10))
 
 st.info("Upload ulasan_tokopedia.csv lo buat test! Metrics NB dari model train sebelumnya.")
+
